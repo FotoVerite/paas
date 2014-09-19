@@ -1,0 +1,14 @@
+{
+  "name": "fotoverite-paas",
+  "description": "paas for the master photographer FotoVerite of conference event fame.",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "4.x",
+    "picture-tube": "0.0.4",
+    "request": "2.x",
+    "routes": "x",
+    "colors": "x",
+    "suffle": "x"
+  }
+}
