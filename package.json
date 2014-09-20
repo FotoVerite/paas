@@ -9,6 +9,7 @@
     "request": "2.x",
     "routes": "x",
     "colors": "x",
-    "suffle": "x"
+    "shuffle-array": "x",
+    "glob": "x"
   }
 }

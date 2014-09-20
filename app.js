@@ -5,7 +5,10 @@ var request = require("request");
 var pictureTube = require("picture-tube");
 var url = require("url");
 var Router = require("routes");
+var shuffle = require("shuffle-array");
 var colors = require("colors");
+var glob = require("glob");
+var fs = require("fs");
 
 var router = new Router();
 
@@ -52,8 +55,15 @@ function gimmePhoto(req, res, match) {
   // send user list
   res.statusCode = 200;
   var tube = pictureTube();
-  request("http://www.darlinhouse.com/readcherry.png").pipe(tube);
-  tube.pipe(res);
+  glob("public/*.png", null, function (er, files) {
+    var photo = shuffle.pick(files);
+  // files is an array of filenames.
+  // If the `nonull` option is set, and nothing
+  // was found, then files is ["**/*.js"]
+  // er is an error object or null.
+    fs.createReadStream(photo).pipe(tube);
+    tube.pipe(res);
+  });
 }
 
 function contact(req,res,match) {
