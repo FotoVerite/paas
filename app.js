@@ -9,6 +9,7 @@ var shuffle = require("shuffle-array");
 var colors = require("colors");
 var glob = require("glob");
 var fs = require("fs");
+var path = require("path");
 
 var router = new Router();
 
@@ -20,7 +21,9 @@ router.addRoute("/contact", contact);
 http.createServer(function (req, res) {
   var path = url.parse(req.url).pathname;
   var match = router.match(path);
-  match.fn(req, res, match);
+  if(match){
+    match.fn(req, res, match);
+  }
 }).listen(1337);
 
 function main(req, res, match) {
@@ -55,7 +58,7 @@ function gimmePhoto(req, res, match) {
   // send user list
   res.statusCode = 200;
   var tube = pictureTube();
-  glob("public/*.png", null, function (er, files) {
+  glob(path.join(__dirname + "/public/*.png"), null, function (er, files) {
     var photo = shuffle.pick(files);
   // files is an array of filenames.
   // If the `nonull` option is set, and nothing
@@ -72,7 +75,8 @@ function contact(req,res,match) {
   lastName: "Bergman",
   email: "mzbphoto@gmail.com",
   phone: "2016585727",
-  flickr: "http://flickr.com/matthewbergman"
+  flickr: "http://flickr.com/matthewbergman",
+  twitter: "@fotoverite"
 };
 
 var contactString = JSON.stringify(contactInfo);
